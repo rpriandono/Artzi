@@ -32,14 +32,14 @@ class BasicMoves(object):
         self.MotorABackward = GPIO.PWM(self.PinMotorABackward, self.MaxDCpower)
         self.MotorBBackward = GPIO.PWM(self.PinMotorBBackward, self.MaxDCpower)
 
-    def getDCpower(self, Motor):
+    def __getDCpower(self, Motor):
         """ Get the current DC power on motor A or Motor B"""
         if Motor == "A":
             return self.DCpowerA
         elif Motor == "B":
             return self.DCpowerB
         else:
-            print "ERROR: getDCpower should be A or B"
+            print "ERROR: __getDCpower should be A or B"
             self.CleanUpPinSignal()
             quit()
 
@@ -47,57 +47,65 @@ class BasicMoves(object):
         """ Acceleration motor A forward """
         for self.DCpowerA in range(self.DCpowerA, Power + 1, 5):
             self.MotorAForward.ChangeDutyCycle(self.DCpowerA)
+            print self.DCpowerA
             time.sleep(0.1)
-        print "Forward, power usage Motor A: ", self.getDCpower("A"), "%"
+        print "Forward, power usage Motor A: ", self.__getDCpower("A"), "%"
 
     def __accelMotorBFwd(self, Power):
         """ Acceleration motor B forward """
         for self.DCpowerB in range(self.DCpowerB, Power + 1, 5):
             self.MotorBForward.ChangeDutyCycle(self.DCpowerB)
+            print self.DCpowerB
             time.sleep(0.1)
-        print "Forward, power usage Motor B: ", self.getDCpower("B"), "%"
+        print "Forward, power usage Motor B: ", self.__getDCpower("B"), "%"
 
     def __decelMotorAFwd(self, Power):
         """ Deceleration motor A forward """
         for self.DCpowerA in range(self.DCpowerA, Power - 1, -5):
             self.MotorAForward.ChangeDutyCycle(self.DCpowerA)
+            print self.DCpowerA
             time.sleep(0.1)
-        print "Forward, power usage Motor A: ", self.getDCpower("A"), "%"
+        print "Forward, power usage Motor A: ", self.__getDCpower("A"), "%"
 
     def __decelMotorBFwd(self, Power):
         """ Deceleration motor B forward """
         for self.DCpowerB in range(self.DCpowerB, Power - 1, -5):
             self.MotorBForward.ChangeDutyCycle(self.DCpowerB)
+            print self.DCpowerB
             time.sleep(0.1)
-        print "Forward, power usage Motor B: ", self.getDCpower("B"), "%"
+        print "Forward, power usage Motor B: ", self.__getDCpower("B"), "%"
 
     def __accelMotorABwd(self, Power):
         """ Acceleration motor A backward"""
         for self.DCpowerA in range(self.DCpowerA, Power + 1, 5):
             self.MotorABackward.ChangeDutyCycle(self.DCpowerA)
+            print self.DCpowerA
             time.sleep(0.1)
-        print "Backward, power usage Motor A: ", self.getDCpower("A"), "%"
+        print "Backward, power usage Motor A: ", self.__getDCpower("A"), "%"
 
     def __accelMotorBBwd(self, Power):
         """ Acceleration motor B backward"""
         for self.DCpowerB in range(self.DCpowerB, Power + 1, 5):
             self.MotorBBackward.ChangeDutyCycle(self.DCpowerB)
+            print self.DCpowerB
             time.sleep(0.1)
-        print "Backward, power usage Motor B: ", self.getDCpower("B"), "%"
+        print "Backward, power usage Motor B: ", self.__getDCpower("B"), "%"
 
     def __decelMotorABwd(self, Power):
         """ Deceleration motor A backward"""
         for self.DCpowerA in range(self.DCpowerA, Power - 1, -5):
             self.MotorABackward.ChangeDutyCycle(self.DCpowerA)
+            print self.DCpowerA
             time.sleep(0.1)
-        print "Backward, power usage Motor A: ", self.getDCpower("A"), "%"
+        print "Backward, power usage Motor A: ", self.__getDCpower("A"), "%"
 
     def __decelMotorBBwd(self, Power):
         """ Deceleration motor B backward"""
         for self.DCpowerB in range(self.DCpowerB, Power - 1, -5):
             self.MotorBBackward.ChangeDutyCycle(self.DCpowerB)
+            print self.DCpowerB
             time.sleep(0.1)
-        print "Backward, power usage Motor B: ", self.getDCpower("B"), "%"
+        print "Backward, power usage Motor B: ", self.__getDCpower("B"), "%"
 
     def forward(self, PowerMotorA, PowerMotorB):
         """ Moves the vehicle forward and defining the DC power percentage 0 to 100 (full Power) on each motor.
