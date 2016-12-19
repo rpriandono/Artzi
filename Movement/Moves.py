@@ -129,7 +129,7 @@ class BasicMoves(object):
             thread.start_new_thread(self.__decelMotorBFwd, (PowerMotorB, ))
 
     def backward(self, PowerMotorA, PowerMotorB):
-        """ Moves the vehicle backward and defining the power pecentage 0 to 100 (full Power).
+        """ Moves the vehicle backward and defining the DC power percentage 0 to 100 (full Power).
             exp: object.backward(50) or object.backward(100)
         """
         # guard the percentage 1-100 <-- to do
@@ -150,13 +150,19 @@ class BasicMoves(object):
             thread.start_new_thread(self.__decelMotorABwd, (PowerMotorA, ))
             thread.start_new_thread(self.__decelMotorBBwd, (PowerMotorB, ))
 
+    def stop(self):
+        """ Vehilce stop or idle.
+        """
+        self.DCpowerA = 0
+        self.DCpowerB = 0
+        self.MotorAForward.ChangeDutyCycle(self.DCpowerA)
+        self.MotorBForward.ChangeDutyCycle(self.DCpowerB)
+        self.MotorABackward.ChangeDutyCycle(self.DCpowerA)
+        self.MotorBBackward.ChangeDutyCycle(self.DCpowerB)
+
     def CleanUpPinSignal(self):
         """ this method stops the wheels rotation and cleans up the GPIO Pins
         ===== RUN THIS METHOD EVERYTIME PROGRAM IS ENDED!!! =====
         """
-        self.MotorAForward.stop()
-        self.MotorBForward.stop()
-        self.MotorABackward.stop()
-        self.MotorBBackward.stop()
         GPIO.cleanup()
         print "GPIO cleaned!"

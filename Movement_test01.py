@@ -28,4 +28,16 @@ time.sleep(3)
 vecMoves.backward(0, 0)
 time.sleep(3)
 
+vecMoves.stop()
+time.sleep(3)
+
+vecMoves.forward(100, 100)
+time.sleep(3)
+
+vecMoves.stop()
+time.sleep(3)
+
+vecMoves.backward(100, 100)
+time.sleep(3)
+
 vecMoves.CleanUpPinSignal()
