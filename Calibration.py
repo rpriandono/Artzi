@@ -2,22 +2,26 @@ from Movement.Moves import BasicMoves
 import time
 
 """
-vecMoves.forward(25, 100) = 90 degree right turn
-vecMoves.forward(100, 25) = 90 degree right turn
+Straight line 		 = vecMoves(??,??)
+90 degree turn right = vecMoves(??,??)
+90 degree turn left  = vecMoves(??,??)
 
 """
 
 
 # Calibration script - Forward backward
-vecMoves = BasicMoves(9, 8, 10, 7)
+vecMoves = BasicMoves(10, 7, 9, 8)
 
-vecMoves.forward(25, 25)
+vecMoves.forward(100, 100)
 time.sleep(3)
 
 vecMoves.stop()
 time.sleep(3)
 
-vecMoves.backward(50, 50)
+vecMoves.backward(100, 100)
+time.sleep(3)
+
+vecMoves.stop()
 time.sleep(3)
 
 vecMoves.CleanUpPinSignal()
