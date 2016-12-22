@@ -1,25 +1,34 @@
 from Movement.Moves import BasicMoves
 import time
 
-"""
-Straight line 		 = vecMoves(??,??)
-90 degree turn right = vecMoves(??,??)
-90 degree turn left  = vecMoves(??,??)
-
-"""
-
-
-# Calibration script - Forward backward
+# calibration script - for Movement component
 vecMoves = BasicMoves(10, 7, 9, 8)
 
-vecMoves.forward(100, 100)
+# Straight line
+vecMoves.forward(50, 43)
 time.sleep(3)
 
 vecMoves.stop()
 time.sleep(3)
 
-vecMoves.backward(100, 100)
+vecMoves.backward(49, 50)
 time.sleep(3)
+
+vecMoves.stop()
+time.sleep(3)
+
+
+#=== rotate 180 degree ===
+vecMoves.rotateRight(50, 50)
+time.sleep(1)
+
+vecMoves.stop()
+time.sleep(3)
+
+
+#=== rotate 180 degree ===
+vecMoves.rotateLeft(50, 50)
+time.sleep(1)
 
 vecMoves.stop()
 time.sleep(3)

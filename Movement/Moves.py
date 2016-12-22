@@ -15,8 +15,6 @@ class BasicMoves(object):
         self.PinMotorABackward = PinMotorABackward
         self.PinMotorBBackward = PinMotorBBackward
         self.frequency = 100
-        self.DCpowerA = 0
-        self.DCpowerB = 0
 
         # Set the GPIO modes
         GPIO.setmode(GPIO.BCM)
@@ -32,80 +30,25 @@ class BasicMoves(object):
         self.MotorABackward = GPIO.PWM(self.PinMotorABackward, self.frequency)
         self.MotorBBackward = GPIO.PWM(self.PinMotorBBackward, self.frequency)
 
-    def __getDCpower(self, Motor):
-        """ Get the current DC power on motor A or Motor B"""
-        if Motor == "A":
-            return self.DCpowerA
-        elif Motor == "B":
-            return self.DCpowerB
-        else:
-            print "ERROR: __getDCpower should be A or B"
-            self.CleanUpPinSignal()
-            quit()
+    def __MotorAFwd(self, Power):
+        """ Motor A forward """
+        self.MotorAForward.ChangeDutyCycle(Power)
+        print "Forward, Motor A DC power: ", Power, "%"
 
-    def __accelMotorAFwd(self, Power):
-        """ Acceleration motor A forward """
-        for self.DCpowerA in range(self.DCpowerA, Power + 1, 5):
-            self.MotorAForward.ChangeDutyCycle(self.DCpowerA)
-            print self.DCpowerA
-            time.sleep(0.1)
-        print "Forward Acc, power usage Motor A: ", self.__getDCpower("A"), "%"
+    def __MotorBFwd(self, Power):
+        """ Motor B forward """
+        self.MotorBForward.ChangeDutyCycle(Power)
+        print "Forward, Motor B DC power: ", Power, "%"
 
-    def __accelMotorBFwd(self, Power):
-        """ Acceleration motor B forward """
-        for self.DCpowerB in range(self.DCpowerB, Power + 1, 5):
-            self.MotorBForward.ChangeDutyCycle(self.DCpowerB)
-            print self.DCpowerB
-            time.sleep(0.1)
-        print "Forward Acc, power usage Motor B: ", self.__getDCpower("B"), "%"
+    def __MotorABwd(self, Power):
+        """ Motor A backward"""
+        self.MotorABackward.ChangeDutyCycle(Power)
+        print "Backward, Motor A DC power: ", Power, "%"
 
-    def __decelMotorAFwd(self, Power):
-        """ Deceleration motor A forward """
-        for self.DCpowerA in range(self.DCpowerA, Power - 1, -5):
-            self.MotorAForward.ChangeDutyCycle(self.DCpowerA)
-            print self.DCpowerA
-            time.sleep(0.1)
-        print "Forward Dec, power usage Motor A: ", self.__getDCpower("A"), "%"
-
-    def __decelMotorBFwd(self, Power):
-        """ Deceleration motor B forward """
-        for self.DCpowerB in range(self.DCpowerB, Power - 1, -5):
-            self.MotorBForward.ChangeDutyCycle(self.DCpowerB)
-            print self.DCpowerB
-            time.sleep(0.1)
-        print "Forward Dec, power usage Motor B: ", self.__getDCpower("B"), "%"
-
-    def __accelMotorABwd(self, Power):
-        """ Acceleration motor A backward"""
-        for self.DCpowerA in range(self.DCpowerA, Power + 1, 5):
-            self.MotorABackward.ChangeDutyCycle(self.DCpowerA)
-            print self.DCpowerA
-            time.sleep(0.1)
-        print "Backward Acc, power usage Motor A: ", self.__getDCpower("A"), "%"
-
-    def __accelMotorBBwd(self, Power):
-        """ Acceleration motor B backward"""
-        for self.DCpowerB in range(self.DCpowerB, Power + 1, 5):
-            self.MotorBBackward.ChangeDutyCycle(self.DCpowerB)
-            print self.DCpowerB
-            time.sleep(0.1)
-        print "Backward Acc, power usage Motor B: ", self.__getDCpower("B"), "%"
-
-    def __decelMotorABwd(self, Power):
-        """ Deceleration motor A backward"""
-        for self.DCpowerA in range(self.DCpowerA, Power - 1, -5):
-            self.MotorABackward.ChangeDutyCycle(self.DCpowerA)
-            print self.DCpowerA
-            time.sleep(0.1)
-        print "Backward Dec, power usage Motor A: ", self.__getDCpower("A"), "%"
-
-    def __decelMotorBBwd(self, Power):
-        """ Deceleration motor B backward"""
-        for self.DCpowerB in range(self.DCpowerB, Power - 1, -5):
-            self.MotorBBackward.ChangeDutyCycle(self.DCpowerB)
-            print self.DCpowerB
-            time.sleep(0.1)
-        print "Backward Dec, power usage Motor B: ", self.__getDCpower("B"), "%"
+    def __MotorBBwd(self, Power):
+        """ Motor B backward"""
+        self.MotorBBackward.ChangeDutyCycle(Power)
+        print "Backward, Motor B DC power: ", Power, "%"
 
     def forward(self, PowerMotorA, PowerMotorB):
         """ Moves the vehicle forward and defining the DC power percentage 0 to 100 (full Power) on each motor.
@@ -118,15 +61,10 @@ class BasicMoves(object):
             quit()
         self.MotorABackward.stop()
         self.MotorBBackward.stop()
-        self.MotorAForward.start(self.DCpowerA)
-        self.MotorBForward.start(self.DCpowerB)
-
-        if self.DCpowerA <= PowerMotorA and self.DCpowerB <= PowerMotorB:
-            thread.start_new_thread(self.__accelMotorAFwd, (PowerMotorA, ))
-            thread.start_new_thread(self.__accelMotorBFwd, (PowerMotorB, ))
-        else:
-            thread.start_new_thread(self.__decelMotorAFwd, (PowerMotorA, ))
-            thread.start_new_thread(self.__decelMotorBFwd, (PowerMotorB, ))
+        self.MotorAForward.start(PowerMotorA)
+        self.MotorBForward.start(PowerMotorB)
+        thread.start_new_thread(self.__MotorAFwd, (PowerMotorA, ))
+        thread.start_new_thread(self.__MotorBFwd, (PowerMotorB, ))
 
     def backward(self, PowerMotorA, PowerMotorB):
         """ Moves the vehicle backward and defining the DC power percentage 0 to 100 (full Power).
@@ -140,25 +78,52 @@ class BasicMoves(object):
 
         self.MotorAForward.stop()
         self.MotorBForward.stop()
-        self.MotorABackward.start(self.DCpowerA)
-        self.MotorBBackward.start(self.DCpowerB)
-
-        if self.DCpowerA <= PowerMotorA and self.DCpowerB <= PowerMotorB:
-            thread.start_new_thread(self.__accelMotorABwd, (PowerMotorA, ))
-            thread.start_new_thread(self.__accelMotorBBwd, (PowerMotorB, ))
-        else:
-            thread.start_new_thread(self.__decelMotorABwd, (PowerMotorA, ))
-            thread.start_new_thread(self.__decelMotorBBwd, (PowerMotorB, ))
+        self.MotorABackward.start(PowerMotorA)
+        self.MotorBBackward.start(PowerMotorB)
+        thread.start_new_thread(self.__MotorABwd, (PowerMotorA, ))
+        thread.start_new_thread(self.__MotorBBwd, (PowerMotorB, ))
 
     def stop(self):
-        """ Vehilce stop or idle.
+        """ Vehicle stop or idle.
         """
-        self.DCpowerA = 0
-        self.DCpowerB = 0
-        self.MotorAForward.ChangeDutyCycle(self.DCpowerA)
-        self.MotorBForward.ChangeDutyCycle(self.DCpowerB)
-        self.MotorABackward.ChangeDutyCycle(self.DCpowerA)
-        self.MotorBBackward.ChangeDutyCycle(self.DCpowerB)
+        self.MotorAForward.ChangeDutyCycle(0)
+        self.MotorBForward.ChangeDutyCycle(0)
+        self.MotorABackward.ChangeDutyCycle(0)
+        self.MotorBBackward.ChangeDutyCycle(0)
+        print "Stop, Motor A DC power: ", 0, "%"
+        print "Stop, Motor B DC power: ", 0, "%"
+
+    def rotateRight(self, PowerMotorA, PowerMotorB):
+        """ rotate the robot to the right.
+            requires the DC power for both motors as an input
+        """
+        if PowerMotorA < 0 or PowerMotorA > 100 or PowerMotorB < 0 or PowerMotorB > 100:
+            print "ERROR: Power usage should be between 0 to 100%"
+            self.CleanUpPinSignal()
+            quit()
+
+        self.MotorABackward.stop()
+        self.MotorBForward.stop()
+        self.MotorAForward.start(PowerMotorA)
+        self.MotorBBackward.start(PowerMotorB)
+        thread.start_new_thread(self.__MotorAFwd, (PowerMotorA, ))
+        thread.start_new_thread(self.__MotorBBwd, (PowerMotorB, ))
+
+    def rotateLeft(self, PowerMotorA, PowerMotorB):
+        """ rotate the robot to the left.
+            requires the DC power for both motors as an input
+        """
+        if PowerMotorA < 0 or PowerMotorA > 100 or PowerMotorB < 0 or PowerMotorB > 100:
+            print "ERROR: Power usage should be between 0 to 100%"
+            self.CleanUpPinSignal()
+            quit()
+
+        self.MotorAForward.stop()
+        self.MotorBBackward.stop()
+        self.MotorABackward.start(PowerMotorA)
+        self.MotorBForward.start(PowerMotorB)
+        thread.start_new_thread(self.__MotorABwd, (PowerMotorA, ))
+        thread.start_new_thread(self.__MotorBFwd, (PowerMotorB, ))
 
     def CleanUpPinSignal(self):
         """ this method stops the wheels rotation and cleans up the GPIO Pins
