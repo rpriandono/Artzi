@@ -17,6 +17,6 @@ try:
             time.sleep(0.1)
 
 # If you press CTRL+C, cleanup and stop
-except KeyboardInterrupt:   
+except KeyboardInterrupt:
     sensor.CleanIRpin()
     print "GPIO cleaned"

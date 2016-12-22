@@ -11,23 +11,24 @@ class UltraSonic(object):
 
     def __init__(self, USTriggerPin, USEchoPin, **book):
         super(UltraSonic, self).__init__(**book)
+        if USTriggerPin != 0 and USEchoPin != 0:
+            # Set the GPIO modes
+            GPIO.setmode(GPIO.BCM)
+            GPIO.setwarnings(False)
 
-        # Set the GPIO modes
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
+            # Define GPIO pins to use on the Pi
+            self.pinTrigger = USTriggerPin
+            self.pinEcho = USEchoPin
 
-        # Define GPIO pins to use on the Pi
-        self.pinTrigger = USTriggerPin
-        self.pinEcho = USEchoPin
+            print("Ultrasonic Measurement")
 
-        print("Ultrasonic Measurement")
-
-        # Set pins as output and input
-        GPIO.setup(self.pinTrigger, GPIO.OUT)  # Triggerd
-        GPIO.setup(self.pinEcho, GPIO.IN)		# Echo
+            # Set pins as output and input
+            GPIO.setup(self.pinTrigger, GPIO.OUT)  # Triggerd
+            GPIO.setup(self.pinEcho, GPIO.IN)       # Echo
 
     def MeasureDistance(self):
-        """ it returns the distance between the object infrom with the robot in centimeter
+        """ it returns the distance between
+        the robot with the object infront in centimeter
         """
         # Set trigger to False (Low)
         GPIO.output(self.pinTrigger, False)
@@ -54,7 +55,6 @@ class UltraSonic(object):
             # see the echo quickly enough, so it has to detect that
             # problem and say what has happened
             if StopTime - StartTime >= 0.04:
-                #return 0
                 StopTime = StartTime
                 break
 
@@ -67,10 +67,8 @@ class UltraSonic(object):
 
         # That was the distance there and back so halve the value
         Distance = Distance / 2
-        #print("Distance: %.1f cm" % Distance)
         return Distance
 
-    def CleanUltrasonicPins(self):
+    def CleanGPIOPins(self):
         """ clean up the Ultrasonic Pins"""
         GPIO.cleanup()
-        print "GPIO Cleaned!"
