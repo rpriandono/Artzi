@@ -4,8 +4,8 @@ import thread
 
 
 class BasicMoves(object):
-    """basic robot movement i.e. forward, backward, and stop
-        exp: VecMoves = BasicMoves(9, 8, 10, 7)
+    """basic robot movement i.e. forward, backward, rotateLeft, rotateRight and stop
+        exp: VecMoves = BasicMoves(10, 7, 9, 8)
     """
 
     def __init__(self, PinMotorAForward, PinMotorBForward, PinMotorABackward, PinMotorBBackward):

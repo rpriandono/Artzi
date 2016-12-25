@@ -20,7 +20,7 @@ class UltraSonic(object):
             self.pinTrigger = USTriggerPin
             self.pinEcho = USEchoPin
 
-            print("Ultrasonic Measurement")
+            #print("Ultrasonic Measurement")
 
             # Set pins as output and input
             GPIO.setup(self.pinTrigger, GPIO.OUT)  # Triggerd
