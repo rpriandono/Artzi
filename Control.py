@@ -2,7 +2,6 @@ from Movement.Moves import BasicMoves
 from Sensors.Sensors import Sensor
 import time
 import threading
-import Queue
 import RPi.GPIO as GPIO
 
 
@@ -65,20 +64,20 @@ class Controller(threading.Thread):
                 self.vecMoves.stop()
             elif Mutex[0] == 1 and Mutex[1] == 1:
                 print "forward"
-                self.vecMoves.forward(50, 50)
+                self.vecMoves.forward(40, 40)
             elif Mutex[0] == 0 and Mutex[1] == 1:
                 print "slight right - add loop or recursive"
-                self.vecMoves.forward(50, 25)
+                self.vecMoves.forward(100, 0)
             elif Mutex[0] == 1 and Mutex[1] == 0:
                 print "slight left - add loop or recursive"
-                self.vecMoves.forward(25, 50)
+                self.vecMoves.forward(0, 100)
             elif Mutex[0] == 0 and Mutex[1] == 0:
-                print "rotate"
-                self.vecMoves.rotateRight(50, 50)
+                print "STOP"
+                self.vecMoves.stop()
             else:
                 print "ERROR: Unknown condition"
 
-            time.sleep(0.1)
+            time.sleep(0.01)
 
     def __thread4(self, Mutex):
         print "Process4"

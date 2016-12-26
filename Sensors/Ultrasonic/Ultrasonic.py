@@ -34,7 +34,7 @@ class UltraSonic(object):
         GPIO.output(self.pinTrigger, False)
 
         # Allow module to settle
-        time.sleep(0.5)
+        time.sleep(0.1)
 
         # Send 10us pulse to trigger
         GPIO.output(self.pinTrigger, True)
