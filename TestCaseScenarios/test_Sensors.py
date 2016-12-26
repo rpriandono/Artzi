@@ -1,5 +1,7 @@
 from Sensors.Sensors import Sensor
 import time
+import sys
+sys.path.append('../')
 
 distanceSensor = Sensor(USTriggerPin=17, USEchoPin=18)
 LineTracker1 = Sensor(PinIR=25)

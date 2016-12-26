@@ -1,5 +1,7 @@
 from Movement.Moves import BasicMoves
 import time
+import sys
+sys.path.append('../')
 
 # test script - for Movement component
 vecMoves = BasicMoves(10, 7, 9, 8)

@@ -1,10 +1,10 @@
 import RPi.GPIO as GPIO  # Import the GPIO Library
-import time  # Import the Time library
 import thread
 
 
 class BasicMoves(object):
-    """basic robot movement i.e. forward, backward, rotateLeft, rotateRight and stop
+    """basic robot movement i.e.
+    forward, backward, rotateLeft, rotateRight and stop
         exp: VecMoves = BasicMoves(10, 7, 9, 8)
     """
 
@@ -51,7 +51,8 @@ class BasicMoves(object):
         print "Backward, Motor B DC power: ", Power, "%"
 
     def forward(self, PowerMotorA, PowerMotorB):
-        """ Moves the vehicle forward and defining the DC power percentage 0 to 100 (full Power) on each motor.
+        """ Moves the vehicle forward and defining
+        the DC power percentage 0 to 100 (full Power) on each motor.
             exp: object.forward(50,50) or object.forward(100,100)
         """
         # guard the percentage 1-100 <-- to do
@@ -67,7 +68,8 @@ class BasicMoves(object):
         thread.start_new_thread(self.__MotorBFwd, (PowerMotorB, ))
 
     def backward(self, PowerMotorA, PowerMotorB):
-        """ Moves the vehicle backward and defining the DC power percentage 0 to 100 (full Power).
+        """ Moves the vehicle backward and defining
+        the DC power percentage 0 to 100 (full Power).
             exp: object.backward(50) or object.backward(100)
         """
         # guard the percentage 1-100 <-- to do
@@ -126,7 +128,8 @@ class BasicMoves(object):
         thread.start_new_thread(self.__MotorBFwd, (PowerMotorB, ))
 
     def CleanUpPinSignal(self):
-        """ this method stops the wheels rotation and cleans up the GPIO Pins
+        """
+        this method stops the wheels rotation and cleans up the GPIO Pins
         ===== RUN THIS METHOD EVERYTIME PROGRAM IS ENDED!!! =====
         """
         GPIO.cleanup()

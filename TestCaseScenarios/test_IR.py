@@ -1,5 +1,7 @@
 import time
 from Sensors.IR.IR import InfraRed
+import sys
+sys.path.append('../')
 
 sensor = InfraRed(25)
 
@@ -18,5 +20,5 @@ try:
 
 # If you press CTRL+C, cleanup and stop
 except KeyboardInterrupt:
-    sensor.CleanIRpin()
+    sensor.CleanGPIOPins()
     print "GPIO cleaned"

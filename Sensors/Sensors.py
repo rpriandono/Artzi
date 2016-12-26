@@ -6,6 +6,10 @@ import RPi.GPIO as GPIO
 class Sensor(InfraRed, UltraSonic):
     """
        The Sensor class inherits All the Hw sensor class on the robot.
+        it acts as interface for all the sensor in the Sensors component
+        hence, it can be expand if the vehicle mount
+         another type of sensor in the future
+
        For examples:
          --> DistanceSensor = Sensor(USTriggerPin=17, USEchoPin=18)
            Declare an object as Ultrasonic sensor.

@@ -1,5 +1,6 @@
 from Sensors.Ultrasonic.Ultrasonic import UltraSonic
-
+import sys
+sys.path.append('../')
 
 sensor = UltraSonic(17, 18)
 
@@ -12,4 +13,4 @@ try:
 # If you press CTRL+C, cleanup and stop
 except KeyboardInterrupt:
     # Reset GPIO settings
-    sensor.CleanUltrasonicPins()
+    sensor.CleanGPIOPins()
