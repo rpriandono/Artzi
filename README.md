@@ -1,29 +1,20 @@
 # Artzi
-Vehicle robotics code for automated vehicle
+Artzi is a prototype simulation robot for an Automated vehicle. The software architecture contains several components. The components are segregated based on its functionality.
 
-Artzi is a simulation model robot for Automated vehicle.
-It contains with several components.
+###Movement: 
+A component that defines the vehicle movement. The BasicMoves class acts as the Hardware Software Interface because it controls wheels rotation. The basic movements are forward, backward, rotate left/right, and stop.
 
-Movement:
-A component contains with BasicMoves class that defines the vehicle movement.
-the BasicMoves class act as the Hardware Software interface because it basically control the wheel rotation.
-the basic movement are forward
+###Sensors: 
+A component represents the hardware sensor attached to the robot. It contains Sensor class that uses the Cooperative inheritance all the sensor class available. Only two type of sensors that are currently attached i.e. Infra Red and Ultrasonic. This component can be expanded for another sensor in the future (e.g. Camera).
 
-Sensors:
-A componenet represents the Hw sensor attached to the robot.
-it contains Sensor class that uses the Cooperative inheritance all the sensor class avaliable.
-at the moments only two type of sensors are attached i.e. Infra Red and Ultrasonic
-This component can be expand if you'd like to add another sensor in the future
+###Algorithms: 
+A component that represents a collection of algorithms. It uses the information from the sensor as input. It contains algorithm class that uses the Cooperative inheritance all the Algorithm class available. Similar to Sensor component, the Algorithms component also can be expanded with another algorithm in the future (e.g. Image processing).
 
-Algorithms:
-a Componenet represents collection of algorithms.
-it contains algorithm class that uses the Cooperative inheritance all the Algorithm class avaliable.
-Similar like Sensor component, the Algorithms component also can be expand with another algorithms in the future.
+###Communication: 
+A component that was designed to represent communication purposes (i.e. IEEE wave model, ETSI model). This component still under development
 
-Communication:
-a components that was design to collect all communication purposes in the future.
+###Controller: 
+The component that contains the main controller of the Program. It basically the component that glues all the components together because it is where all the components are interact with each other.
 
-Controller:
-The components contains the main controller of the Program.
-it basicly the component that glues all the components together.
-this is where all the components interact with each other.
+Below is the software class diagram;
+![artzi-uml](https://cloud.githubusercontent.com/assets/5297983/21596696/eea55c44-d13e-11e6-8379-9ac62ec43fd3.png)
