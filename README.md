@@ -17,4 +17,4 @@ A component that was designed to represent communication purposes (i.e. IEEE wav
 The component that contains the main controller of the Program. It basically the component that glues all the components together because it is where all the components are interact with each other.
 
 Below is the software class diagram;
-![artzi-uml](https://cloud.githubusercontent.com/assets/5297983/21596696/eea55c44-d13e-11e6-8379-9ac62ec43fd3.png)
+![artzi-uml](https://cloud.githubusercontent.com/assets/5297983/21596923/a44f496c-d142-11e6-95fd-296c588c1c99.png)
